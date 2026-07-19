@@ -28,7 +28,6 @@ def t(text, target_lang):
 
 st.set_page_config(
 	page_title="FIFA 2026 Smart Stadium Ops",
-	page_icon="🏟️",
 	layout="wide",
 )
 
@@ -955,13 +954,13 @@ def audience_dashboard() -> None:
 
 			left, right = st.columns([1.2, 1])
 			with left:
-				st.markdown("### 🗺️ Live World Map View")
+				st.markdown("###  Live World Map View")
 				components.html(
 					f"<iframe src='{map_url}' width='100%' height='450' style='border:0; border-radius:18px;' loading='lazy' referrerpolicy='no-referrer-when-downgrade'></iframe>",
 					height=470,
 				)
 			with right:
-				st.markdown("### 📍 Routing Intelligence")
+				st.markdown("###  Routing Intelligence")
 				st.markdown(
 					f"""
 					<div style="padding: 1.5rem; background: rgba(0,0,0,0.5); border-radius: 16px; border: 1px solid #8ed8ff; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
@@ -1073,7 +1072,7 @@ def audience_dashboard() -> None:
 
 
 def organizer_dashboard() -> None:
-	st.title("🧭 Organizer Command Center")
+	st.title(" Organizer Command Center")
 	st.success("You are logged in as an Organizer.")
 	st.caption("Live stadium intelligence, crowd monitoring, volunteer dispatch, and match-day decision support.")
 
@@ -1178,7 +1177,7 @@ def organizer_dashboard() -> None:
 
 
 def volunteer_dashboard() -> None:
-	st.title("🤝 Volunteer Operations Panel")
+	st.title(" Volunteer Operations Panel")
 	st.success("You are logged in as a Volunteer.")
 	st.caption("Handle live tasks, feedback, and points that feed directly into organizer analytics.")
 
