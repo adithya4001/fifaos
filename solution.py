@@ -203,10 +203,10 @@ def initialize_state() -> None:
     st.session_state.setdefault("volunteer_service", "home")
     st.session_state.setdefault("audience_queries", generate_10_audience_queries())
     st.session_state.setdefault("my_vol_tasks", [
-        {"Task": "Guide Fans to Gate 3", "Assigned By": "Org-101", "Target User": "Crowd", "Status": "Pending"},
-        {"Task": "Wheelchair Support", "Assigned By": "Org-104", "Target User": "User U-881", "Status": "Pending"},
-        {"Task": "Clear Bottle Spill", "Assigned By": "System Auto", "Target User": "None", "Status": "Pending"},
-        {"Task": "VIP Escort", "Assigned By": "Org-101", "Target User": "User U-002", "Status": "Pending"},
+        {"Task": "Serving beverages at Block A", "Assigned By": "Org-101", "Target User": "Crowd", "Status": "Pending"},
+        {"Task": "Monitoring fan needs in the stadium", "Assigned By": "Org-104", "Target User": "General Audience", "Status": "Pending"},
+        {"Task": "Investigate security concerns at Gate 3", "Assigned By": "System Auto", "Target User": "None", "Status": "Pending"},
+        {"Task": "VIP Escort & Accessibility", "Assigned By": "Org-101", "Target User": "User U-002", "Status": "Pending"},
         {"Task": "Restroom Check", "Assigned By": "System Auto", "Target User": "None", "Status": "Pending"},
     ])
     st.session_state.setdefault("vol_points_earned", 0)
@@ -367,6 +367,104 @@ def reset_and_logout() -> None:
     st.session_state.user_role = None
     st.rerun()
 
+translations = {
+        "English": {
+            "hero_title": "Ultimate FIFA 2026 Experience",
+            "hero_body": "A premium fan portal for seamless ticketing, navigation, stadium support, and live engagement.",
+            "welcome_title": "Fan command center",
+            "welcome_body": "Plan your arrival, book your seat, explore the stadium, and ask questions in your chosen language.",
+            "services": "YOUR SERVICES",
+            "book": "Book Tickets",
+            "navigate": "Easy Navigation",
+            "quiz": "QUIZMELA",
+            "query": "Query Center",
+            "back": "Back to Home",
+        },
+        "Spanish": {
+            "hero_title": "Experiencia Definitiva FIFA 2026",
+            "hero_body": "Un portal premium para entradas, navegación, soporte de estadio y participación en vivo.",
+            "welcome_title": "Centro de mando para aficionados",
+            "welcome_body": "Planifica tu llegada, compra tu asiento, explora el estadio y haz preguntas en tu idioma.",
+            "services": "TUS SERVICIOS",
+            "book": "Reservar entradas",
+            "navigate": "Navegación fácil",
+            "quiz": "QUIZMELA",
+            "query": "Centro de consultas",
+            "back": "Volver al inicio",
+        },
+        "French": {
+            "hero_title": "Expérience Ultime FIFA 2026",
+            "hero_body": "Un portail premium pour la billetterie, la navigation, l'assistance et l'engagement en direct.",
+            "welcome_title": "Centre de commandement des fans",
+            "welcome_body": "Préparez votre arrivée, réservez votre siège, explorez le stade et posez vos questions dans votre langue.",
+            "services": "VOS SERVICES",
+            "book": "Réserver des billets",
+            "navigate": "Navigation facile",
+            "quiz": "QUIZMELA",
+            "query": "Centre de requêtes",
+            "back": "Retour à l'accueil",
+        },
+    }
+
+football_gallery = [
+        {"title": "The roar of the crowd", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxzFusCs4ze2BtMACoHZpKDmZP3EaGPS6PndzKURjPSQ&s=10", "points": ["Stadium energy turns every match into a live festival.", "Fans create the atmosphere players remember forever.", "Shared chants make the World Cup feel global in one place."]},
+        {"title": "Precision on the pitch", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR71rVQVAOmKT4-enwash4oXXeRLL-QYPdR02EBvA_RwQ&s=10", "points": ["Every pass and run matters under pressure.", "Tactical movement is as important as raw speed.", "Small moments can decide a world-class match."]},
+        {"title": "The game is universal", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8TXTjOfQVtCW8eg-D-ZdFo2enK4t55G0QvMikP9_eiA&s=10", "points": ["Football connects different countries and cultures.", "One tournament can bring millions of stories together.", "The World Cup is a shared language for fans."]},
+        {"title": "Fans make it iconic", "image": "https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=1200", "points": ["Color, flags, and chants define the tournament vibe.", "Supporters convert a stadium into a memory machine.", "Cheering together is half the magic of FIFA."]},
+        {"title": "Moments become history", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjiBSEHSG1pNBy6RlTvjox63njjLbSK9wUsRvbKyGgrQ&s=10", "points": ["Big matches create unforgettable highlights.", "Players become legends through decisive performances.", "Every World Cup adds new records and emotions."]},
+    ]
+
+service_cards = [
+        {"key": "booking", "title": "Booking Tickets", "desc": "Pick a FIFA 2026 match, choose your seat in a stadium view, see the price instantly, and complete payment in a guided flow.", "image": "https://images.unsplash.com/photo-1547347298-4074fc3086f0?q=80&w=1200"},
+        {"key": "navigation", "title": "Easy Navigation", "desc": "Enter your current address and stadium destination, select car/bus/bike, and get a route assistant with map preview and travel guidance.", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi8rPPedMyqp-46-Dc-eFjxy8lxC8WboOGpEtoZGWT3w&s=10"},
+        {"key": "quizmela", "title": "QUIZMELA", "desc": "Play 5 quizzes, 5 riddles, and 5 football mini-games in a gamified dialog experience with points, hints, and fun facts.", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOcfivWaXqASmX79_i7Z5cVRQ6YhEjrOx0DO5gIJS6FA&s=10"},
+        {"key": "query", "title": "Query Center", "desc": "Raise a ticket with name, seat number, ticket ID, issue details, and proof photo so the organiser can assign a volunteer fast.", "image": "https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200"},
+    ]
+
+world_cup_matches = [
+        {"match": "Brazil vs Japan", "date": "2026-06-29", "time": "12:00", "stadium": "SoFi Stadium", "city": "Inglewood", "stage": "Round of 32", "demand": "High"},
+        {"match": "Germany vs Paraguay", "date": "2026-06-29", "time": "16:30", "stadium": "NRG Stadium", "city": "Houston", "stage": "Round of 32", "demand": "High"},
+        {"match": "Netherlands vs Morocco", "date": "2026-06-29", "time": "19:00", "stadium": "Gillette Stadium", "city": "Foxborough", "stage": "Round of 32", "demand": "High"},
+        {"match": "France vs Sweden", "date": "2026-06-30", "time": "17:00", "stadium": "AT&T Stadium", "city": "Arlington", "stage": "Round of 32", "demand": "Very High"},
+        {"match": "Mexico vs Ecuador", "date": "2026-06-30", "time": "20:00", "stadium": "MetLife Stadium", "city": "East Rutherford", "stage": "Round of 32", "demand": "Very High"},
+        {"match": "England vs DR Congo", "date": "2026-07-01", "time": "12:00", "stadium": "Estadio Azteca", "city": "Mexico City", "stage": "Round of 32", "demand": "High"},
+        {"match": "Belgium vs Senegal", "date": "2026-07-01", "time": "13:00", "stadium": "Mercedes-Benz Stadium", "city": "Atlanta", "stage": "Round of 32", "demand": "High"},
+        {"match": "USA vs Bosnia and Herzegovina", "date": "2026-07-01", "time": "17:00", "stadium": "Lumen Field", "city": "Seattle", "stage": "Round of 32", "demand": "High"},
+        {"match": "Spain vs Austria", "date": "2026-07-02", "time": "12:00", "stadium": "Levi's Stadium", "city": "Santa Clara", "stage": "Round of 32", "demand": "Very High"},
+        {"match": "Portugal vs Croatia", "date": "2026-07-02", "time": "19:00", "stadium": "SoFi Stadium", "city": "Inglewood", "stage": "Round of 32", "demand": "High"},
+        {"match": "Australia vs Egypt", "date": "2026-07-03", "time": "13:00", "stadium": "BC Place", "city": "Vancouver", "stage": "Round of 32", "demand": "High"},
+        {"match": "Argentina vs Cape Verde", "date": "2026-07-03", "time": "18:00", "stadium": "AT&T Stadium", "city": "Arlington", "stage": "Round of 32", "demand": "Very High"},
+        {"match": "Colombia vs Ghana", "date": "2026-07-03", "time": "20:30", "stadium": "Hard Rock Stadium", "city": "Miami Gardens", "stage": "Round of 32", "demand": "High"},
+        {"match": "Canada vs Morocco", "date": "2026-07-04", "time": "12:00", "stadium": "NRG Stadium", "city": "Houston", "stage": "Round of 16", "demand": "High"},
+        {"match": "Paraguay vs France", "date": "2026-07-04", "time": "17:00", "stadium": "Lincoln Financial Field", "city": "Philadelphia", "stage": "Round of 16", "demand": "Very High"},
+        {"match": "Brazil vs Norway", "date": "2026-07-05", "time": "16:00", "stadium": "MetLife Stadium", "city": "East Rutherford", "stage": "Round of 16", "demand": "Very High"},
+        {"match": "Mexico vs England", "date": "2026-07-06", "time": "19:00", "stadium": "Estadio Azteca", "city": "Mexico City", "stage": "Round of 16", "demand": "Very High"},
+        {"match": "Portugal vs Spain", "date": "2026-07-06", "time": "14:00", "stadium": "Estadio Azteca", "city": "Mexico City", "stage": "Round of 16", "demand": "Legendary"},
+    ]
+
+quiz_bank = [
+        {"question": "Which country hosted the first FIFA World Cup?", "options": ["Uruguay", "Brazil", "Italy", "France"], "answer": "Uruguay", "fact": "Uruguay hosted and won the inaugural 1930 World Cup."},
+        {"question": "How many players are on the field for one football team?", "options": ["9", "10", "11", "12"], "answer": "11", "fact": "A football team fields 11 players at a time."},
+        {"question": "What color is the card for a sending-off offense?", "options": ["Green", "Yellow", "Blue", "Red"], "answer": "Red", "fact": "A red card means immediate dismissal."},
+        {"question": "How long is a standard football match?", "options": ["60 min", "70 min", "90 min", "100 min"], "answer": "90 min", "fact": "Standard play is two 45-minute halves."},
+        {"question": "Which trophy is lifted by the World Cup winners?", "options": ["Golden Boot", "FIFA Trophy", "World Cup Trophy", "Champions Shield"], "answer": "World Cup Trophy", "fact": "Winners lift the iconic FIFA World Cup Trophy."},
+    ]
+
+riddle_bank = [
+        {"question": "I travel the world but never leave my corner. What am I?", "answer": "A postage stamp."},
+        {"question": "What has 32 seams and makes people celebrate?", "answer": "A football."},
+        {"question": "What can roll without wheels and is loved by millions?", "answer": "A soccer ball."},
+        {"question": "What gets louder when a goal is scored?", "answer": "The crowd."},
+        {"question": "What do fans wear to show loyalty to their nation?", "answer": "A jersey or scarf."},
+    ]
+
+game_bank = [
+        {"title": "Guess the Champion", "clue": "Name the team that won the 2022 World Cup and remains a fan favorite.", "answer": "Argentina"},
+        {"title": "Legend Spotter", "clue": "This player is known for explosive speed and goals for Brazil in the modern era.", "answer": "Vinicius Junior"},
+        {"title": "Stadium Builder", "clue": "Choose the best stadium feature for crowd comfort: shade, water, or signage?", "answer": "Signage"},
+        {"title": "Route Master", "clue": "The fastest option in heavy traffic is usually which transport mode?", "answer": "Bus"},
+        {"title": "Penalty Pick", "clue": "Penalty shootouts reward precision. Which skill matters most?", "answer": "Composure"},
+    ]
 
 # ==========================================
 # AUDIENCE DASHBOARD (MODIFIED AS REQUESTED)
@@ -405,108 +503,13 @@ def audience_dashboard() -> None:
     if "audience_modal" not in st.session_state:
         st.session_state.audience_modal = None
 
-    translations = {
-        "English": {
-            "hero_title": "Ultimate FIFA 2026 Experience",
-            "hero_body": "A premium fan portal for seamless ticketing, navigation, stadium support, and live engagement.",
-            "welcome_title": "Fan command center",
-            "welcome_body": "Plan your arrival, book your seat, explore the stadium, and ask questions in your chosen language.",
-            "services": "YOUR SERVICES",
-            "book": "Book Tickets",
-            "navigate": "Easy Navigation",
-            "quiz": "QUIZMELA",
-            "query": "Query Center",
-            "back": "Back to Home",
-        },
-        "Spanish": {
-            "hero_title": "Experiencia Definitiva FIFA 2026",
-            "hero_body": "Un portal premium para entradas, navegación, soporte de estadio y participación en vivo.",
-            "welcome_title": "Centro de mando para aficionados",
-            "welcome_body": "Planifica tu llegada, compra tu asiento, explora el estadio y haz preguntas en tu idioma.",
-            "services": "TUS SERVICIOS",
-            "book": "Reservar entradas",
-            "navigate": "Navegación fácil",
-            "quiz": "QUIZMELA",
-            "query": "Centro de consultas",
-            "back": "Volver al inicio",
-        },
-        "French": {
-            "hero_title": "Expérience Ultime FIFA 2026",
-            "hero_body": "Un portail premium pour la billetterie, la navigation, l'assistance et l'engagement en direct.",
-            "welcome_title": "Centre de commandement des fans",
-            "welcome_body": "Préparez votre arrivée, réservez votre siège, explorez le stade et posez vos questions dans votre langue.",
-            "services": "VOS SERVICES",
-            "book": "Réserver des billets",
-            "navigate": "Navigation facile",
-            "quiz": "QUIZMELA",
-            "query": "Centre de requêtes",
-            "back": "Retour à l'accueil",
-        },
-    }
+    
     lang = st.session_state.audience_language
     localized = translations.get(lang, translations["English"])
 
     all_languages = ["English", "Spanish", "French", "German"]
 
-    football_gallery = [
-        {"title": "The roar of the crowd", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxzFusCs4ze2BtMACoHZpKDmZP3EaGPS6PndzKURjPSQ&s=10", "points": ["Stadium energy turns every match into a live festival.", "Fans create the atmosphere players remember forever.", "Shared chants make the World Cup feel global in one place."]},
-        {"title": "Precision on the pitch", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR71rVQVAOmKT4-enwash4oXXeRLL-QYPdR02EBvA_RwQ&s=10", "points": ["Every pass and run matters under pressure.", "Tactical movement is as important as raw speed.", "Small moments can decide a world-class match."]},
-        {"title": "The game is universal", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8TXTjOfQVtCW8eg-D-ZdFo2enK4t55G0QvMikP9_eiA&s=10", "points": ["Football connects different countries and cultures.", "One tournament can bring millions of stories together.", "The World Cup is a shared language for fans."]},
-        {"title": "Fans make it iconic", "image": "https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=1200", "points": ["Color, flags, and chants define the tournament vibe.", "Supporters convert a stadium into a memory machine.", "Cheering together is half the magic of FIFA."]},
-        {"title": "Moments become history", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjiBSEHSG1pNBy6RlTvjox63njjLbSK9wUsRvbKyGgrQ&s=10", "points": ["Big matches create unforgettable highlights.", "Players become legends through decisive performances.", "Every World Cup adds new records and emotions."]},
-    ]
-
-    service_cards = [
-        {"key": "booking", "title": "Booking Tickets", "desc": "Pick a FIFA 2026 match, choose your seat in a stadium view, see the price instantly, and complete payment in a guided flow.", "image": "https://images.unsplash.com/photo-1547347298-4074fc3086f0?q=80&w=1200"},
-        {"key": "navigation", "title": "Easy Navigation", "desc": "Enter your current address and stadium destination, select car/bus/bike, and get a route assistant with map preview and travel guidance.", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi8rPPedMyqp-46-Dc-eFjxy8lxC8WboOGpEtoZGWT3w&s=10"},
-        {"key": "quizmela", "title": "QUIZMELA", "desc": "Play 5 quizzes, 5 riddles, and 5 football mini-games in a gamified dialog experience with points, hints, and fun facts.", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOcfivWaXqASmX79_i7Z5cVRQ6YhEjrOx0DO5gIJS6FA&s=10"},
-        {"key": "query", "title": "Query Center", "desc": "Raise a ticket with name, seat number, ticket ID, issue details, and proof photo so the organiser can assign a volunteer fast.", "image": "https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200"},
-    ]
-
-    world_cup_matches = [
-        {"match": "Brazil vs Japan", "date": "2026-06-29", "time": "12:00", "stadium": "SoFi Stadium", "city": "Inglewood", "stage": "Round of 32", "demand": "High"},
-        {"match": "Germany vs Paraguay", "date": "2026-06-29", "time": "16:30", "stadium": "NRG Stadium", "city": "Houston", "stage": "Round of 32", "demand": "High"},
-        {"match": "Netherlands vs Morocco", "date": "2026-06-29", "time": "19:00", "stadium": "Gillette Stadium", "city": "Foxborough", "stage": "Round of 32", "demand": "High"},
-        {"match": "France vs Sweden", "date": "2026-06-30", "time": "17:00", "stadium": "AT&T Stadium", "city": "Arlington", "stage": "Round of 32", "demand": "Very High"},
-        {"match": "Mexico vs Ecuador", "date": "2026-06-30", "time": "20:00", "stadium": "MetLife Stadium", "city": "East Rutherford", "stage": "Round of 32", "demand": "Very High"},
-        {"match": "England vs DR Congo", "date": "2026-07-01", "time": "12:00", "stadium": "Estadio Azteca", "city": "Mexico City", "stage": "Round of 32", "demand": "High"},
-        {"match": "Belgium vs Senegal", "date": "2026-07-01", "time": "13:00", "stadium": "Mercedes-Benz Stadium", "city": "Atlanta", "stage": "Round of 32", "demand": "High"},
-        {"match": "USA vs Bosnia and Herzegovina", "date": "2026-07-01", "time": "17:00", "stadium": "Lumen Field", "city": "Seattle", "stage": "Round of 32", "demand": "High"},
-        {"match": "Spain vs Austria", "date": "2026-07-02", "time": "12:00", "stadium": "Levi's Stadium", "city": "Santa Clara", "stage": "Round of 32", "demand": "Very High"},
-        {"match": "Portugal vs Croatia", "date": "2026-07-02", "time": "19:00", "stadium": "SoFi Stadium", "city": "Inglewood", "stage": "Round of 32", "demand": "High"},
-        {"match": "Australia vs Egypt", "date": "2026-07-03", "time": "13:00", "stadium": "BC Place", "city": "Vancouver", "stage": "Round of 32", "demand": "High"},
-        {"match": "Argentina vs Cape Verde", "date": "2026-07-03", "time": "18:00", "stadium": "AT&T Stadium", "city": "Arlington", "stage": "Round of 32", "demand": "Very High"},
-        {"match": "Colombia vs Ghana", "date": "2026-07-03", "time": "20:30", "stadium": "Hard Rock Stadium", "city": "Miami Gardens", "stage": "Round of 32", "demand": "High"},
-        {"match": "Canada vs Morocco", "date": "2026-07-04", "time": "12:00", "stadium": "NRG Stadium", "city": "Houston", "stage": "Round of 16", "demand": "High"},
-        {"match": "Paraguay vs France", "date": "2026-07-04", "time": "17:00", "stadium": "Lincoln Financial Field", "city": "Philadelphia", "stage": "Round of 16", "demand": "Very High"},
-        {"match": "Brazil vs Norway", "date": "2026-07-05", "time": "16:00", "stadium": "MetLife Stadium", "city": "East Rutherford", "stage": "Round of 16", "demand": "Very High"},
-        {"match": "Mexico vs England", "date": "2026-07-06", "time": "19:00", "stadium": "Estadio Azteca", "city": "Mexico City", "stage": "Round of 16", "demand": "Very High"},
-        {"match": "Portugal vs Spain", "date": "2026-07-06", "time": "14:00", "stadium": "Estadio Azteca", "city": "Mexico City", "stage": "Round of 16", "demand": "Legendary"},
-    ]
-
-    quiz_bank = [
-        {"question": "Which country hosted the first FIFA World Cup?", "options": ["Uruguay", "Brazil", "Italy", "France"], "answer": "Uruguay", "fact": "Uruguay hosted and won the inaugural 1930 World Cup."},
-        {"question": "How many players are on the field for one football team?", "options": ["9", "10", "11", "12"], "answer": "11", "fact": "A football team fields 11 players at a time."},
-        {"question": "What color is the card for a sending-off offense?", "options": ["Green", "Yellow", "Blue", "Red"], "answer": "Red", "fact": "A red card means immediate dismissal."},
-        {"question": "How long is a standard football match?", "options": ["60 min", "70 min", "90 min", "100 min"], "answer": "90 min", "fact": "Standard play is two 45-minute halves."},
-        {"question": "Which trophy is lifted by the World Cup winners?", "options": ["Golden Boot", "FIFA Trophy", "World Cup Trophy", "Champions Shield"], "answer": "World Cup Trophy", "fact": "Winners lift the iconic FIFA World Cup Trophy."},
-    ]
-
-    riddle_bank = [
-        {"question": "I travel the world but never leave my corner. What am I?", "answer": "A postage stamp."},
-        {"question": "What has 32 seams and makes people celebrate?", "answer": "A football."},
-        {"question": "What can roll without wheels and is loved by millions?", "answer": "A soccer ball."},
-        {"question": "What gets louder when a goal is scored?", "answer": "The crowd."},
-        {"question": "What do fans wear to show loyalty to their nation?", "answer": "A jersey or scarf."},
-    ]
-
-    game_bank = [
-        {"title": "Guess the Champion", "clue": "Name the team that won the 2022 World Cup and remains a fan favorite.", "answer": "Argentina"},
-        {"title": "Legend Spotter", "clue": "This player is known for explosive speed and goals for Brazil in the modern era.", "answer": "Vinicius Junior"},
-        {"title": "Stadium Builder", "clue": "Choose the best stadium feature for crowd comfort: shade, water, or signage?", "answer": "Signage"},
-        {"title": "Route Master", "clue": "The fastest option in heavy traffic is usually which transport mode?", "answer": "Bus"},
-        {"title": "Penalty Pick", "clue": "Penalty shootouts reward precision. Which skill matters most?", "answer": "Composure"},
-    ]
+    
 
     def get_t(key: str) -> str:
         return localized.get(key, translations["English"].get(key, key))
@@ -848,10 +851,10 @@ def audience_dashboard() -> None:
         <div class="goal-container">
             <div class="net"></div>
             <div id="gk" aria-label="Goalkeeper"></div>
-            <div class="target" id="tl" onclick="shoot('tl')"></div>
-            <div class="target" id="tr" onclick="shoot('tr')"></div>
-            <div class="target" id="bl" onclick="shoot('bl')"></div>
-            <div class="target" id="br" onclick="shoot('br')"></div>
+            <div class="target" id="tl" onclick="shoot('tl')" role="button" tabindex="0" aria-label="Shoot Top Left"></div>
+            <div class="target" id="tr" onclick="shoot('tr')" role="button" tabindex="0" aria-label="Shoot Top Right"></div>
+            <div class="target" id="bl" onclick="shoot('bl')" role="button" tabindex="0" aria-label="Shoot Bottom Left"></div>
+            <div class="target" id="br" onclick="shoot('br')" role="button" tabindex="0" aria-label="Shoot Bottom Right"></div>
         </div>
         <script>
             let score = 0; let miss = 0;
@@ -934,6 +937,11 @@ def audience_dashboard() -> None:
 # ==========================================
 
 def organizer_dashboard() -> None:
+    """
+    Renders the Organizer Command Center.
+    Provides real-time decision support, operational intelligence, 
+    and crowd management tracking features.
+    """
     st.markdown(
         """
         <div aria-label="Organizer Header" style="padding:2rem; border-radius:15px; background:linear-gradient(90deg, rgba(12,25,45,1) 0%, rgba(20,40,70,1) 100%); border:1px solid #8ed8ff; margin-bottom:2rem;">
@@ -1096,6 +1104,10 @@ def organizer_dashboard() -> None:
 # ==========================================
 
 def volunteer_dashboard() -> None:
+    """
+    Renders the Volunteer Operations dashboard.
+    Tracks assigned tasks, monitors fan needs, and displays a gamified leaderboard.
+    """
     st.markdown(
         """
         <div aria-label="Volunteer Header" style="background: linear-gradient(160deg, rgba(20,40,40,0.9), rgba(10,20,20,0.95)); padding: 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; border: 2px solid #fff; margin-bottom: 2rem;">
