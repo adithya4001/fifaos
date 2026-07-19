@@ -1,5 +1,5 @@
 streamlit
-deep-translator
-pytest
 pandas
 plotly
+deep-translator
+pytest
