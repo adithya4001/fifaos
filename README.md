@@ -1,4 +1,4 @@
-##FIFA OS
+#FIFA OS
 
 The solution we are building is for fans, organizers, volunteers, and venue staff. In our project, we need to integrate an all-in-one platform where the user experience changes based on their role. Based on the login details, the user should be directed to their specific category and only access those relevant features. For example, if I am a fan, standard authentication is enough. If I am a FIFA organizer, I must log in using an Organizer ID and username. If I am a volunteer, I must log in using a Volunteer ID and password to access volunteer-specific features.
 
