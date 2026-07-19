@@ -1,5 +1,5 @@
 import pytest
-from app import hash_password, verify_password, normalize_key
+from solution import hash_password, verify_password, normalize_key
 
 def test_password_hashing():
     password = "SecurePassword123!"
