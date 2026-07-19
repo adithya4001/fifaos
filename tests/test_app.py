@@ -1,8 +1,7 @@
 import pytest
 import os
 import json
-from pathlib import Path
-from solution import (
+from solution_5 import (
     hash_password, verify_password, normalize_key, 
     normalize_text, default_user_store, normalize_user_store
 )
@@ -39,3 +38,4 @@ def test_normalize_user_store():
     assert isinstance(clean_store["Organizer"], list)
     assert len(clean_store["Organizer"]) == 0
     assert len(clean_store["Audience"]) == 1
+    assert clean_store["Volunteer"][0]["volunteer_id"] == "VOL-001"
